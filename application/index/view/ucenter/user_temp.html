@@ -1,0 +1,105 @@
+{include file="public/header,public/menu" /}
+    
+<div class="main" style="min-height:500px;">
+    
+    <div class="main-inner">
+
+        <div class="container">
+    
+          <div class="row">
+            
+            <div class="span12">
+                
+                <div class="widget">
+                        
+                    <div class="widget-header">
+                        <i class="icon-picture"></i>
+                        <h3> 我的模板 </h3>
+                    </div> <!-- /widget-header -->
+                    
+                    <div class="widget-content">
+                        <div>
+                            <a href="{:url('ucenter/add_temp')}" class="btn btn-sm" > 添加 </a>  
+                        </div>
+                        <hr>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                              <tr>
+                                <th> 模板名称 </th>
+                                <th> 名称 </th>
+                                <th> 创建时间 </th>
+                                <th class="td-actions"> </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                {foreach $user_temp as $temp}
+                                <tr>
+                                    <td> {$temp.temp_name} </td>
+                                    <td> {$temp.my_name} </td>
+                                    <td> {$temp.ctime|date='Y-m-d H:i',###} </td>
+                                    <td class="td-actions">
+                                        <a href="javascript:;" onclick="show_html({$temp.id})" target="__black" class="btn btn-small btn-success">查看</a>
+                                        <a href="{:url('ucenter/del_temp_user')}?id={$temp.id}" class="btn btn-small btn-danger">删除</a>
+                                    </td>
+                                </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+                                  
+                        <div style="float:right;">  
+                            {$page} 
+                        </div>
+
+                    </div> <!-- /widget-content -->
+                        
+                </div> <!-- /widget -->                 
+                
+            </div> <!-- /span12 -->         
+            
+            
+          </div> <!-- /row -->
+    
+        </div> <!-- /container -->
+        
+    </div> <!-- /main-inner -->
+    
+</div>
+
+<script type="text/javascript">
+    function show_html(id){
+        $.ajax({
+             type: "POST",
+             url: "{:url('ucenter/user_temp_show')}",
+             async: false,
+             data: {id:id},
+             dataType: "json",
+             success: function(res){
+                console.log(res);
+                if(res.flog!=1){
+                    myModalLabel.html('错误');
+                    myModalBody.html(res.msg);
+                    change_alert.css('display','none');
+                    click_alert.click();
+                    setTimeout(function(){
+                        window.location.href = "{:url('ucenter/user_temp')}";
+                    },2000)
+                }else{
+                    saveCode(res.data.html);
+                }
+             }
+        });
+    }
+
+    // 下载
+    function saveCode(obj) { 
+        console.log(obj);
+        w = window.open();
+        w.document.open()
+        w.document.write(obj)
+        w.document.close();
+    }
+
+
+</script>
+    
+{include file="public/footer" /}

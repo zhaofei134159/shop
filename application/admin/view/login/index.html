@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>飞友图库后台登录</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/resource/adminsite/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/resource/adminsite/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/resource/adminsite/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/resource/adminsite/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+           
+            <div class="col-md-4 col-md-offset-4">
+
+                <div class="login-panel panel panel-default">
+                    <div class="alert alert-success" id="alert" style="display:none;">
+                        
+                    </div>
+                    <div class="panel-heading">
+                        <h3 class="panel-title">登录</h3>
+                    </div>
+                    <div class="panel-body">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="邮箱" name="email" type="email" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="密码" name="password" type="password" value="">
+                            </div>
+                           
+                            <!-- Change this to a button or input when using this as a form -->
+                            <button class="btn btn-lg btn-success btn-block" onclick="do_login()" >登录</button>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="/resource/adminsite/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/resource/adminsite/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/resource/adminsite/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/resource/adminsite/dist/js/sb-admin-2.js"></script>
+    <script type="text/javascript">
+        var alert = $('#alert');
+        function do_login(){
+            var email = $('input[name="email"]').val();
+            var password = $('input[name="password"]').val();
+
+            if(email==''){
+                alert.html('邮箱不能为空');
+                alert.removeClass('alert-success');
+                alert.addClass('alert-danger');
+                alert.show();
+                return false;
+            }
+
+            var myema =  /^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.){1,4}[a-z]{2,3}$/i;
+            if(!myema.test(email)){ 
+                alert.html('邮箱格式错误!');
+                alert.removeClass('alert-success');
+                alert.addClass('alert-danger');
+                alert.show();
+                return false; 
+            }
+
+            if(password==''){
+                alert.html('密码不能为空');
+                alert.removeClass('alert-success');
+                alert.addClass('alert-danger');
+                alert.show();
+                return false;
+            }
+
+            $.ajax({
+                 type: "POST",
+                 url: "{:url('login/do_login')}",
+                 async: false,
+                 data: {email:email,password:password},
+                 dataType: "json",
+                 success: function(res){
+                    if(res.flog!=1){
+                        alert.html(res.msg);
+                        alert.removeClass('alert-success');
+                        alert.addClass('alert-danger');
+                        alert.show();
+                        return false;
+                    }else{
+                        alert.html(res.msg);
+                        alert.removeClass('alert-danger');
+                        alert.addClass('alert-success');
+                        alert.show();
+                        setTimeout(function(){
+                            window.location.href = '/admin';
+                        },2000)
+                    }
+                 }
+            });
+            return true;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+{include file="public/header,public/menu" /}
+    <div class="main" style="min-height:500px;">
+        <div class="main-inner">
+            <div class="container">
+        
+              <div class="row">
+                
+                <div class="span12">            
+                    
+                    <div class="widget ">
+                        
+                        <div class="widget-header">
+                            <i class="icon-user"></i>
+                            <h3>用户中心</h3>
+                        </div> <!-- /widget-header -->
+                        
+                        <div class="widget-content">
+                            
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="formcontrols">
+                                    <form id="edit-profile" class="form-horizontal" method="post" action="{:url('ucenter/user_info')}" enctype="multipart/form-data" onsubmit="return check();">
+                                        <fieldset>
+                                            <div class="control-group ">
+                                                <label class="control-label" for="headimg">头像:</label>
+                                                <div class="span4 inline">
+                                                    <img src="/{if condition="($user['headimg']!='')"}{$user['headimg']}{/if}" id="headimg" width="100" alt="">
+                                                </div>
+                                                <div class="span4 inline">
+                                                    <span style="display:none;"><input type="file" name="headimg"></span>
+                                                    <button type="button" onclick="upload_file()" class="btn btn-success">上传头像</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="control-group">                                         
+                                                <label class="control-label" for="nikename">用户名:</label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" id="nikename" name="nikename" placeholder="用户名" value="{if condition="($user['nikename']!='')"}{$user['nikename']}{/if}">
+                                                </div> <!-- /controls -->               
+                                            </div> <!-- /control-group -->
+                                            
+                                            
+                                            <div class="control-group">                                         
+                                                <label class="control-label" for="email">邮箱:</label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" name="email" id="email" placeholder="email"  value="{if condition="($user['email']!='')"}{$user['email']}{/if}">
+                                                </div> <!-- /controls -->               
+                                            </div> <!-- /control-group -->
+                                             
+                                            <div class="control-group">                                         
+                                                <label class="control-label" for="phone">手机号:</label>
+                                                <div class="controls">
+                                                    <input type="text" class="span6" name="phone" id="phone" placeholder="手机号" value="{if condition="($user['phone']!='')"}{$user['phone']}{/if}">
+                                                </div> <!-- /controls -->               
+                                            </div> <!-- /control-group -->
+                                            
+                                            
+                                            
+                                            <div class="control-group">                                         
+                                                <label class="control-label">性别</label>
+                                                
+                                                
+                                                <div class="controls">
+                                                <label class="radio inline">
+                                                  <input type="radio"  name="sex" value="1" {if condition="($user['sex']==1)"}checked{/if}> 男
+                                                </label>
+                                                
+                                                <label class="radio inline">
+                                                  <input type="radio" name="sex" value="2" {if condition="($user['sex']==2)"}checked{/if}> 女
+                                                </label> 
+                                              </div>    <!-- /controls -->          
+                                            </div> <!-- /control-group -->
+                                            
+                                                
+                                            <div class="form-actions">
+                                                <button type="submit" class="btn btn-primary">保存</button> 
+                                            </div> <!-- /form-actions -->
+                                        </fieldset>
+                                    </form>
+                                    </div>
+                                    
+                                    
+                                </div>
+                              
+                              
+                            </div>
+                            
+                            
+                            
+                            
+                            
+                        </div> <!-- /widget-content -->
+                            
+                    </div> <!-- /widget -->
+                    
+                </div> <!-- /span8 -->
+                
+                
+                
+                
+              </div> <!-- /row -->
+        
+            </div> <!-- /container -->
+            
+        </div> <!-- /main-inner -->
+        
+    </div> 
+    <script type="text/javascript">
+        var alert = $('.alert');
+
+        function upload_file(){
+            $('input[name="headimg"]').click();
+        }
+
+        $('input[name="headimg"]').change(function(){
+            var arr = ['jpeg','.jpg','.png','.JPG','.PNG','JPEG'];
+            var src = $(this).val();
+            var zhui = src.slice(-4);
+            switch(zhui){
+                case 'jpeg':
+                case '.jpg':
+                case '.png':
+                    break;
+                default :
+                    alert.html('上传图片格式错误或者没上传任何图片!');
+                    alert.addClass('alert-danger');
+                    alert.css('display','block');
+                    return false;
+                    break;
+            }
+            var objUrl = getObjectURL(this.files[0]) ;
+            if (objUrl) {
+                console.log(21321312);
+                $("#headimg").attr("src", objUrl) ;
+            }
+        });
+
+
+        function getObjectURL(file) {
+            var url = null ; 
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url;
+        }
+
+        function check(){
+            var email = $('input[name="email"]').val();
+            var phone = $('input[name="phone"]').val();
+
+            var myema =  /^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.){1,4}[a-z]{2,3}$/i;
+            if(email!=''&&!myema.test(email)) 
+            { 
+                alerttitle.html('错误');
+                alertcontent.html('邮箱格式错误!');
+                alert.removeClass('alert-success');
+                alert.addClass('alert-danger');
+                alert.css('display','block');
+                return false; 
+            }
+
+            var pema = /^1[34578]\d{9}$/;
+            if(phone!=''&&!pema.test(phone)){ 
+                alerttitle.html('错误');
+                alertcontent.html('手机号码有误!');
+                alert.removeClass('alert-success');
+                alert.addClass('alert-danger');
+                alert.css('display','block');
+                return false; 
+            } 
+
+            alerttitle.html('成功');
+            alertcontent.html('修改成功!');
+            alert.removeClass('alert-danger');
+            alert.addClass('alert-success');
+            alert.css('display','block');
+
+            setTimeOut('return true',2000);
+        }
+
+
+    </script>
+{include file="public/footer" /}

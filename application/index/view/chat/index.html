@@ -1,0 +1,118 @@
+{include file="public/header,public/menu" /}
+<div class="main" style="min-height:500px;">
+  <div class="main-inner">
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <!-- /widget -->
+          <div class="widget">
+            <div class="widget-header"> <i class="icon-comment"></i>
+              <h3> 聊天交友</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content" id="content" style="height:350px;overflow-x:none;overflow-y:auto;">
+              <ul class="messages_layout log">
+					
+              </ul>
+            </div>
+            <!-- /widget-content --> 
+            <div class="widget-content">
+            	<div>用户：<input type="text" name="user" style="width:95%;height:30px;"></div>
+        		<div>内容：<textarea name="message" id="message" cols="30" rows="5" style="resize:none;width:95%;"></textarea></div>
+        		<a href="javascript:;" class="btn btn-large btn-success" style="width:10%;" onclick="send2()"> 提交 </a>
+            </div>
+          </div>
+          <!-- /widget --> 
+        </div>
+      </div>
+      <!-- /row --> 
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /main-inner --> 
+</div>
+<script type="text/javascript" src="/resource/website/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		socket_link();
+		$(document).keyup(function (evnet) {
+			if (evnet.keyCode == '13') {
+				send2();
+			}
+		});
+	})
+	var socket;
+	function socket_link(){
+	  	var url='ws://104.243.18.161:8000';
+	  	socket=new WebSocket(url);
+	  	socket.onopen=function(){
+	  		console.log('连接成功');
+	  	}
+	  	socket.onmessage=function(msg){
+	  		log(msg);
+	  		console.log(msg);
+	  	}
+	  	socket.onclose=function(){
+	  		console.log('断开连接');
+	  	}
+	}
+	function dis(){
+	  	socket.close();
+	  	socket=null;
+	}
+	function log(res){
+		var user = $('input[name="user"]').val();
+		var data = res.data;
+		var index = JSON.parse(data);
+		var weizhi = 'left';
+		var yonghuclass = 'from_user'
+		if(index.user==user){
+			weizhi = 'right';
+			yonghuclass = 'by_myself';
+		}
+		var html = '';
+		html += '<li class="span10 '+weizhi+' '+yonghuclass+'"> <a href="#" class="avatar"><img src="/resource/website/img/message_avatar1.png"/></a>';
+        html += '<div class="message_wrap"  style="float:'+weizhi+';"> <span class="arrow"></span>';
+        html += '<div class="info"> <a class="name"> 用户 '+index.user+' </a>';
+        html += '</div>';
+        html += '<div class="text">';
+        html += index.msg;
+        html += '</div>'
+        html += '</div>'
+        html += '</li>';
+
+	  	$('.log').append(html);
+	  	document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight;
+	  	// $('.log').html(html);
+	}
+	// function send(){
+	//   	socket.send($('#text').attr('value'));
+	// }
+
+	function send2(){
+		var user = $('input[name="user"]').val();
+		if(user==''){
+			alert('用户名不能为空！');
+			return false;
+		}
+		var message = $('#message').val();
+		if(message==''){
+			alert('内容不能为空！');
+			return false;
+		}
+		console.log(message.length);
+		if(message.length>=24){
+			alert('内容不能超过24个字符！');
+			return false;
+		}
+		var jsonobj = {'type':'php','user':user,'msg':message};
+	  	var json = JSON.stringify(jsonobj);
+	  	socket.send(json);
+	  	$('#message').val('');
+	  	$('input[name="user"]').attr('disabled','disabled');
+	}
+</script>
+
+
+
+{include file="public/footer" /}

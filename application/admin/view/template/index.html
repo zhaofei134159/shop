@@ -1,0 +1,108 @@
+{include file="public/header" /}
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"> 
+
+                        模板列表 <a class="btn btn-success" style="float:right;" href="{:url('template/edit')}?type=1"> 添加 </a>
+                    </h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                   
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <form class="col-sm-12" role="form" action="{:url('template/index')}" method="post">
+                                    <div class="form-group col-sm-3">
+                                        <label>名称：</label>
+                                        <label class="radio-inline">
+                                            <input class="form-control" name="name" value="{if condition="!empty($post['name'])"}{$post['name']}{/if}">
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label>状态：</label>
+                                        <label class="radio-inline">
+                                            <select class="form-control" name="is_del">
+                                                <option value="-1">全部</option>
+                                                <option value="1" {if condition="isset($post['is_del'])&&$post['is_del']==1"}selected{/if}>已删除</option>
+                                                <option value="0" {if condition="isset($post['is_del'])&&$post['is_del']==0"}selected{/if}>未删除</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <button type="submit" class="btn btn-default"> 提交 </button>
+                                    </div>
+                                </form>
+
+                                <hr>
+                                <table width="100%" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td width="10%">#</td>
+                                            <td width="10%">名称</td>
+                                            <td width="20%">描述</td>
+                                            <td width="10%">展示图</td>
+                                            <td width="10%">标签</td>
+                                            <td width="20%">css文件</td>
+                                            <td width="20%">js文件</td>
+                                            <td width="5%">最大照片数</td>
+                                            <td width="5%">是否删除</td>
+                                            <td width="5%">修改时间</td>
+                                            <td width="20%">操作</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {foreach $temps as $temp}
+                                        <?php 
+                                            $path = json_decode($temp['file_path'],true);
+                                        ?>
+                                        <tr>
+                                            <td>{$temp.id}</td>
+                                            <td>{$temp.name}</td>
+                                            <td>{$temp.desc}</td>
+                                            <td><img src="/{if condition="!empty($temp.img)"}{$temp.img}{/if}" width="50" height="50" alt=""></td>
+                                            <td>{$temp.tag}</td>
+                                            <td>{if condition="isset($path['css'])"}有{else}无{/if}</td>
+                                            <td>{if condition="isset($path['js'])"}有{else}无{/if}</td>
+                                            <td>{$temp.max_photo}</td>
+                                            <td>{if condition="$temp.is_del==1"} 已删除 {else} 未删除 {/if}</td>
+                                            <td>{$temp.utime|date="Y-m-d H:i",###}</td>
+                                            <td>
+                                                <a href="{:url('template/file_show')}?id={$temp.id}" class="btn btn-info btn-sm">效果</a>
+                                                |
+                                                <a href="{:url('template/edit')}?type=2&id={$temp.id}" class="btn btn-warning btn-sm"> 修改 </a>
+                                                |
+                                                <a href="{:url('template/del')}?id={$temp.id}" class="btn {if condition="$temp.is_del==1"}btn-success{else}btn-danger{/if} btn-sm"> {if condition="$temp.is_del==1"} 恢复 {else} 删除 {/if} </a>                                              
+                                            </td>
+                                        </tr>
+                                        {/foreach}
+                                    </tbody>
+                                </table>
+
+                                <div style="float:right;">  
+                                    {$page} 
+                                </div>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+
+                    </div>
+                    <!-- /.panel -->
+                </div>
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+</body>
+
+</html>

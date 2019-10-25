@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>飞友 - 图库</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link href="/resource/website/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/resource/website/css/bootstrap-responsive.min.css" rel="stylesheet">
+  <link href="/resource/website/css/font-awesome.css" rel="stylesheet">
+  <link href="/resource/website/css/style.css" rel="stylesheet">
+  <link href="/resource/website/css/pages/dashboard.css" rel="stylesheet">
+  <link href="/resource/website/css/pages/signin.css" rel="stylesheet" type="text/css">
+  <link href="/resource/website/css/pages/plans.css" rel="stylesheet"> 
+
+
+  <script src="/resource/website/js/jquery-1.7.2.min.js"></script> 
+  <script src="/resource/website/js/excanvas.min.js"></script> 
+  <script src="/resource/website/js/chart.min.js" type="text/javascript"></script> 
+  <script src="/resource/website/js/bootstrap.js"></script>
+  <script language="javascript" type="text/javascript" src="/resource/website/js/full-calendar/fullcalendar.min.js"></script>
+  <script src="/resource/website/js/base.js"></script> 
+  <script src="/resource/website/js/signin.js"></script>
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container"> 
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </a>
+      <a class="brand" href="{:url('index/index')}"> FeiYou 图库 </a>
+      <div class="nav-collapse">
+        <ul class="nav pull-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-cog"></i> 设置 <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="javascript:;">帮助</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            {if condition="empty($user_nikename)"}
+              <a href="{:url('login/qq_login')}">
+                <img src="http://blog.myfeiyou.com/public/public/images/qq_login.png" width="23" alt="使用腾讯QQ账号登录" title="腾讯QQ账号登录">
+              </a>
+              <!-- <a href="{:url('login/login')}">登录</a> -->
+            {else}
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="icon-user"></i> {$user_nikename} <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="{:url('ucenter/index')}">个人信息</a></li>
+              <li><a href="{:url('ucenter/user_upload')}">个人图库</a></li>
+              <li><a href="{:url('ucenter/user_temp')}">个人模板</a></li>
+              <li><a href="{:url('login/login_out')}">退出</a></li>
+            </ul>
+            {/if}
+          </li>
+        </ul>
+      </div>
+      <!--/.nav-collapse --> 
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /navbar-inner --> 
+</div>
+<!-- /navbar -->

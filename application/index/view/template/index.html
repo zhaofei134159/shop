@@ -1,0 +1,80 @@
+{include file="public/header,public/menu" /}
+    
+<div class="main" style="min-height:500px;">
+    
+    <div class="main-inner">
+
+        <div class="container">
+    
+          <div class="row">
+            
+            <div class="span12">
+                
+                <div class="widget">
+                        
+                    <div class="widget-header">
+                        <i class="icon-picture"></i>
+                        <h3> 模板 </h3>
+                    </div> <!-- /widget-header -->
+                    
+                    <div class="widget-content">
+                        <div class="pricing-plans plans-4">
+                            {if condition="!empty($temps)"}
+                                {foreach $temps as $temp} 
+                                    <div class="plan-container" style="margin-top:5px;">
+                                        <div class="plan">
+                                            <div class="plan-header">
+                                                <img src="/{$temp.img}" style="width:100%;height:210px;cursor:pointer;" alt="" >
+                                            </div> 
+                                            <div class="plan-features">
+                                                <ul>
+                                                    <li><strong>{$temp.name}</strong></li>
+                                                    <li>{$temp.desc}</li>
+                                                </ul>
+                                            </div> 
+                                            <div class="plan-actions">              
+                                                <a href="{:url('template/look_temp')}?id={$temp.id}" class="btn btn-sm" >查看</a>               
+                                            </div> 
+                                        </div> 
+                                    </div>
+                                {/foreach}
+                            {/if}
+                            
+                        </div> <!-- /pricing-plans -->
+                        
+                    </div> <!-- /widget-content -->
+                        
+                </div> <!-- /widget -->                 
+                
+            </div> <!-- /span12 -->         
+            
+            
+          </div> <!-- /row -->
+    
+        </div> <!-- /container -->
+        
+    </div> <!-- /main-inner -->
+    
+</div>
+<script type="text/javascript">
+    function img_look(res,id){
+
+        $.ajax({
+            type: "POST",
+            url: "{:url('template/look_temp')}",
+            async: true,
+            data: {id:id},
+            dataType: "json",
+            success: function(data){
+               
+                myModalLabel.html(data.data.name);
+                myModalBody.html(data.data.html);
+                change_alert.css('display','none');
+                click_alert.click();
+            }
+        });
+
+    }
+</script>
+   
+{include file="public/footer" /}

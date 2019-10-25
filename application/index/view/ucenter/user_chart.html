@@ -1,0 +1,41 @@
+{include file="public/header" /}
+    <section id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="list-group">
+                        {include file="public/user_menu" /}
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9 alert alert-success">
+                    <h3 class=" text-center"> 个人图库 </h3>
+                    <div class="hr-div"> <hr /></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        {foreach $chart_room as $chart}
+                        <img src="/uploads/chart/{$chart.path}" id="" onclick="chart({$chart.id},{$chart.path})" width="150" alt="" style="margin:10px;">
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="main">
+       <div class="container">
+            <div class="row">
+                 <div id="content" class="col-lg-12 col-sm-12">
+                    <img src="/uploads/chart/{$chart.path}" id="" onclick="chart()" width="150" alt="" style="margin:10px;">
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+        var alert = $('.alert');
+
+        function chart(){
+
+        }
+        
+
+    </script>
+{include file="public/footer" /}

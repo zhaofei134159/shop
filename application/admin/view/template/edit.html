@@ -1,0 +1,111 @@
+{include file="public/header" /}
+        <link rel="stylesheet" href="/resource/public/kindeditor/themes/default/default.css" />
+        <link rel="stylesheet" href="/resource/public/kindeditor/plugins/code/prettify.css" />
+        <script charset="utf-8" src="/resource/public/kindeditor/kindeditor.js"></script>
+        <script charset="utf-8" src="/resource/public/kindeditor/lang/zh_CN.js"></script>
+        <script charset="utf-8" src="/resource/public/kindeditor/plugins/code/prettify.js"></script>
+        <script>
+            KindEditor.ready(function(K) {
+                var editor1 = K.create('textarea[name="content"]', {
+                    cssPath : '/resource/public/kindeditor/plugins/code/prettify.css',
+                    uploadJson : '/resource/public/kindeditor/php/upload_json.php',
+                    fileManagerJson : '/resource/public/kindeditor/php/file_manager_json.php',
+                    allowFileManager : true,
+                    afterCreate : function() {
+                        var self = this;
+                        K.ctrl(document, 13, function() {
+                            self.sync();
+                            K('form[name=example]')[0].submit();
+                        });
+                        K.ctrl(self.edit.doc, 13, function() {
+                            self.sync();
+                            K('form[name=example]')[0].submit();
+                        });
+                    }
+                });
+                prettyPrint();
+            });
+        </script>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">模板 {if condition="$type!=2"} 添加 {else} 修改 {/if}</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <!-- /.col-lg-6 (nested) -->
+                                <div class="col-lg-12">
+                                    <form role="form" action="{:url('template/do_edit')}" method="post" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <label class="control-label" for=""> 名称: </label>
+                                            <input type="text" class="form-control" id="" class="col-lg-4" name="name" value="{if condition="!empty($temp.name)"}{$temp.name}{/if}">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="control-label" for=""> 描述: </label>
+                                            <textarea class="form-control" rows="3" name="desc" style="resize:none;">{if condition="!empty($temp.desc)"}{$temp.desc}{/if}</textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label> 最大照片数: </label>
+                                            <input type="text" name="max_photo"  class="form-control" value="{if condition="!empty($temp.max_photo)"}{$temp.max_photo}{/if}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label" for="">  标签: </label>
+                                            <button class="btn btn-success btn-sm"> 添加标签 </button>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label" for="">  模板展示图: </label>
+                                            <input type="file" name="img">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label" for="">  css文件: </label>
+                                            <input type="file" name="css">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label" for="">  js文件: </label>
+                                            <input type="file" name="js">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label" for="">  内容: </label>
+                                            <textarea class="form-control col-md-12" name="content" id="content" style="min-height:100px;visibility:hidde" />{if condition="!empty($temp.content)"}{$temp.content}{/if}</textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="hidden" name="type" value="{$type}">
+                                        	<input type="hidden" name="id" value="{if condition="!empty($temp.id)"}{$temp.id}{/if}">
+											<button class="btn btn-success" > 提交 </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+
+</body>
+</html>
+

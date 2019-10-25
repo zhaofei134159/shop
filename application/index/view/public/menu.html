@@ -1,0 +1,91 @@
+<div class="subnavbar">
+  <div class="subnavbar-inner">
+    <div class="container">
+      <ul class="mainnav">
+        <li {if condition="($controller=='Index')"} class="active" {/if}><a href="{:url('index/index')}"><i class="icon-dashboard"></i><span> 首页 </span> </a> </li>
+        <li {if condition="($controller=='Chat')"} class="active" {/if}><a href="{:url('chat/index')}"><i class="icon-comment"></i><span> 聊天 </span> </a> </li>
+        <li {if condition="($controller=='Template')"} class="active" {/if}><a href="{:url('template/index')}"><i class="icon-picture"></i><span> 模板 </span> </a> </li>
+        {if condition="!empty($user_nikename)"}
+          <li {if condition="($controller=='Ucenter'&&$action=='index')"} class="active" {/if}><a href="{:url('ucenter/index')}"><i class="icon-user"></i><span> 个人中心 </span> </a> </li>
+          <li {if condition="($controller=='Ucenter'&&$action=='user_upload')"} class="active" {/if}><a href="{:url('ucenter/user_upload')}"><i class="icon-picture"></i><span> 图库 </span> </a> </li>
+          <li {if condition="($controller=='Ucenter'&&($action=='user_temp'||$action=='add_temp'))"} class="active" {/if}><a href="{:url('ucenter/user_temp')}"><i class="icon-folder-open"></i><span> 个人模板 </span> </a> </li>
+        {/if}
+        <!-- <li><a href="guidely.html"><i class="icon-facetime-video"></i><span>App Tour</span> </a></li>
+        <li><a href="charts.html"><i class="icon-bar-chart"></i><span>Charts</span> </a> </li>
+        <li><a href="shortcodes.html"><i class="icon-code"></i><span>Shortcodes</span> </a> </li>
+        <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i><span>Drops</span> <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="icons.html">Icons</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="pricing.html">Pricing Plans</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Signup</a></li>
+            <li><a href="error.html">404</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /subnavbar-inner --> 
+</div>
+
+<div class="main-inner">
+  <div class="container">
+    <div class="row">
+      <div class="span12" >
+        <div class="alert alert-success" id="alert" style="display:none;">
+          <button type="button" class="close" onclick="alert_close()">&times;</button>
+          <strong id="title"></strong> <span id="content"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+<div class="control-group">
+    <label class="control-label"></label>
+    <div class="controls">
+    <!-- Button to trigger modal -->
+        <a href="#myModal" role="button" class="btn" data-toggle="modal" id="click_alert" style="display:none;"></a>
+       
+        <!-- Modal -->
+        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close closeAlert" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel"></h3>
+            </div>
+            <div class="modal-body" id="myModalBody">
+            </div>
+            <div class="modal-footer">
+                <button class="btn closeAlert" data-dismiss="modal" aria-hidden="true">关闭</button>
+                <button class="btn btn-primary" data-dismiss="modal"  id="changeAlert">确认</button>
+            </div>
+        </div>
+    </div> <!-- /controls --> 
+</div> <!-- /control-group -->
+                                            
+                                         
+
+
+<script type="text/javascript">
+  var alert = $('#alert');
+  var alerttitle = $('#title');
+  var alertcontent = $('#content');
+
+  var myModal = $('#myModal');
+  var myModalLabel = $('#myModalLabel');
+  var myModalBody = $('#myModalBody');
+  var close_alert = $('.closeAlert');
+  var change_alert = $('#changeAlert');
+  var click_alert = $('#click_alert');
+  
+
+  function alert_close(){
+      alerttitle.html('');
+      alertcontent.html('');
+      alert.removeClass('alert-success');
+      alert.removeClass('alert-danger');
+      alert.css('display','none');
+  }
+</script>

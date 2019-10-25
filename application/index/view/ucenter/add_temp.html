@@ -1,0 +1,207 @@
+{include file="public/header,public/menu" /}
+    <div class="main" style="min-height:500px;">
+        <div class="main-inner">
+            <div class="container">
+            
+                <div class="row">
+                    
+                    <div class="span12">            
+                        
+                        <div class="widget ">
+                            
+                            <div class="widget-header">
+                                <i class="icon-user"></i>
+                                <h3>生成我的模板</h3>
+                            </div> <!-- /widget-header -->
+                            
+                            <div class="widget-content">
+                            
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="formcontrols">
+                                        <div id="edit-profile" class="form-horizontal">
+
+                                            <fieldset>
+
+                                                <div class="control-group">                                         
+                                                    <label class="control-label" for="phone">名称:</label>
+                                                    <div class="controls">
+                                                        <input type="text" class="span6" name="name" id="name" placeholder="名称" >
+                                                    </div> <!-- /controls -->               
+                                                </div> <!-- /control-group -->
+
+                                                <div class="control-group">                                         
+                                                    <label class="control-label" for="phone">已选模板:</label>
+                                                    <div class="controls" id="check_temp">
+                                                    </div> <!-- /controls -->               
+                                                </div> 
+
+                                                <div class="control-group">                                         
+                                                    <label class="control-label" for="">模板:</label>
+                                                    <div class="controls">
+                                                        {foreach $temps as $temp}
+                                                            <button class="btn btn-success" onclick="temp_check($(this),{$temp.id},'{$temp.img}',{$temp.max_photo})">{$temp.name}</button>
+                                                        {/foreach}
+                                                    </div> <!-- /controls -->               
+                                                </div> <!-- /control-group -->
+
+                                                <div class="control-group">                                         
+                                                    <label class="control-label" for="phone">已选图片:</label>
+                                                    <div class="controls" id="check_photo">
+                                                    </div> <!-- /controls -->               
+                                                </div> 
+                                                
+                                                <div class="control-group">                                         
+                                                    <label class="control-label" for="">图:</label>
+                                                    <div class="controls">
+                                                        {foreach name="photos"  item="photo" key="k"}
+                                                            <button class="btn btn-success" onclick="photo_check($(this),{$photo.id},'{$photo.path}')">图片{$k+1}</button>
+                                                        {/foreach}
+                                                    </div> <!-- /controls -->               
+                                                </div> <!-- /control-group -->
+                                                 
+                                                
+                                                <div class="form-actions">
+                                                    <button type="submit" class="btn btn-primary" onclick="my_temp_submit()">保存</button> 
+                                                </div> <!-- /form-actions -->
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                  
+                                  
+                            </div>
+                                
+                        </div> <!-- /widget-content -->
+                                
+                    </div> <!-- /widget -->
+                        
+                </div> <!-- /span8 -->
+                    
+            </div> <!-- /row -->
+            
+        </div> <!-- /container -->
+                
+    </div> <!-- /main-inner -->
+        
+</div> 
+
+    <script type="text/javascript">
+        var photo = [];
+        var temp = [];
+        var temp_res = '';
+        var photo_res = [];
+        var maxphotos = 0;
+        var photos = 0;
+
+        /**
+        * res 当前点击元素 id 当前的id img 当前的模板展示图 max_photos 当前最大照片数
+        */
+        function temp_check(res,id,img,max_photos){
+            var check_temp = $('#check_temp');
+
+            if(temp.length<=1&&temp.indexOf(id)<0){
+                var html = '<div title="点击删除模板" onclick="temp_remove($(this),'+id+')">';
+                    html += '<img src="/'+img+'"  alt="" style="width:150px;height:100px;cursor:pointer;"  />';
+                    html += '<input type="hidden" name="temp" value="'+id+'" />';
+                    html += '</div>';
+               
+                check_temp.html(html);
+                res.attr('disabled','disabled');
+                temp.splice(0,temp.length);
+                temp.push(id);
+                if(temp_res!=''){
+                    temp_res.removeAttr('disabled');
+                }
+                maxphotos = max_photos;
+                temp_res = res;
+            }
+            console.log(temp);
+        }
+
+        function temp_remove(res,id){
+            res.remove();
+            temp_res.removeAttr('disabled');
+            maxphotos = 0;
+            var index = temp.indexOf(id);
+            delete temp[index];
+        }
+
+        /**
+        * res 当前点击元素 id 当前的id img 图片展示 
+        */
+        function photo_check(res,id,img){
+            var check_photo = $('#check_photo');
+
+            if(photos>=maxphotos){
+                myModalLabel.html('提示');
+                myModalBody.html('最大照片数为: '+maxphotos+' ,已超出！');
+                change_alert.css('display','none');
+                click_alert.click();
+                return false;
+            }
+
+            if(photo.length==0||photo.indexOf(id)<0){
+                var html = '<span onclick="photo_remove($(this),'+id+')"  style="cursor:pointer;" title="点击删除图片">'; 
+                html += '<img src="/'+img+'" style="width:80px;height:50px;" alt=""  />';
+                html += '<input type="hidden" name="photo[]" value="'+id+'" />';
+                html += '</span>';
+                res.attr('disabled','disabled');
+                check_photo.append(html);
+                photo.push(id);
+                photo_res.push(res);
+                photos += 1;
+            }
+            console.log(photo);
+        }
+
+        function photo_remove(res,id){
+            res.remove();
+            photos -= 1;
+            console.log(photos);
+            var index = photo.indexOf(id);
+            photo_res[index].removeAttr('disabled');
+            delete photo[index];
+        }
+
+        function my_temp_submit(){
+            var name = $('input[name="name"]').val();
+            var input_temp = $('input[name="temp"]').val();
+            var input_photo = [];
+
+            $('input[name="photo[]"]').each(function(){
+                var val = $(this).val();
+                input_photo.push(val);
+            })
+
+            if(name==''){
+                myModalLabel.html('错误');
+                myModalBody.html('请输入名称！');
+                change_alert.css('display','none');
+                click_alert.click();
+            }
+
+
+            $.ajax({
+                 type: "POST",
+                 url: "{:url('ucenter/do_edit_temp')}",
+                 async: false,
+                 data: {name:name,input_temp:input_temp,input_photo:input_photo},
+                 dataType: "json",
+                 success: function(res){
+                    console.log(res);
+                    if(res.flog==1){
+                        myModalLabel.html('成功');
+                        myModalBody.html(res.msg);
+                        change_alert.css('display','none');
+                        click_alert.click();
+                        setTimeout(function(){
+                            window.location.href = "{:url('ucenter/user_temp')}";
+                        },2000)
+                    }
+                 }
+            });
+
+        }
+    </script>
+{include file="public/footer" /}
