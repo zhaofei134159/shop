@@ -1,91 +1,170 @@
-<div class="subnavbar">
-  <div class="subnavbar-inner">
-    <div class="container">
-      <ul class="mainnav">
-        <li {if condition="($controller=='Index')"} class="active" {/if}><a href="{:url('index/index')}"><i class="icon-dashboard"></i><span> 首页 </span> </a> </li>
-        <li {if condition="($controller=='Chat')"} class="active" {/if}><a href="{:url('chat/index')}"><i class="icon-comment"></i><span> 聊天 </span> </a> </li>
-        <li {if condition="($controller=='Template')"} class="active" {/if}><a href="{:url('template/index')}"><i class="icon-picture"></i><span> 模板 </span> </a> </li>
-        {if condition="!empty($user_nikename)"}
-          <li {if condition="($controller=='Ucenter'&&$action=='index')"} class="active" {/if}><a href="{:url('ucenter/index')}"><i class="icon-user"></i><span> 个人中心 </span> </a> </li>
-          <li {if condition="($controller=='Ucenter'&&$action=='user_upload')"} class="active" {/if}><a href="{:url('ucenter/user_upload')}"><i class="icon-picture"></i><span> 图库 </span> </a> </li>
-          <li {if condition="($controller=='Ucenter'&&($action=='user_temp'||$action=='add_temp'))"} class="active" {/if}><a href="{:url('ucenter/user_temp')}"><i class="icon-folder-open"></i><span> 个人模板 </span> </a> </li>
-        {/if}
-        <!-- <li><a href="guidely.html"><i class="icon-facetime-video"></i><span>App Tour</span> </a></li>
-        <li><a href="charts.html"><i class="icon-bar-chart"></i><span>Charts</span> </a> </li>
-        <li><a href="shortcodes.html"><i class="icon-code"></i><span>Shortcodes</span> </a> </li>
-        <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i><span>Drops</span> <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="icons.html">Icons</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="pricing.html">Pricing Plans</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="signup.html">Signup</a></li>
-            <li><a href="error.html">404</a></li>
-          </ul>
-        </li> -->
-      </ul>
-    </div>
-    <!-- /container --> 
-  </div>
-  <!-- /subnavbar-inner --> 
-</div>
 
-<div class="main-inner">
-  <div class="container">
-    <div class="row">
-      <div class="span12" >
-        <div class="alert alert-success" id="alert" style="display:none;">
-          <button type="button" class="close" onclick="alert_close()">&times;</button>
-          <strong id="title"></strong> <span id="content"></span>
-        </div>
+  <!-- Menu -->
+
+  <div class="menu d-flex flex-column align-items-start justify-content-start menu_mm trans_400">
+    <div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
+    <div class="menu_top d-flex flex-row align-items-center justify-content-start">
+
+      <!-- Language -->
+      <div class="info_languages has_children">
+        <div class="language_flag"><img src="/resource/website/images/flag_1.svg" alt="https://www.flaticon.com/authors/freepik"></div>
+        <div class="dropdown_text">english</div>
+        <div class="dropdown_arrow"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+        
+        <!-- Language Dropdown Menu -->
+         <ul>
+          <li><a href="#">
+            <div class="language_flag"><img src="/resource/website/images/flag_2.svg" alt="https://www.flaticon.com/authors/freepik"></div>
+            <div class="dropdown_text">french</div>
+          </a></li>
+          <li><a href="#">
+            <div class="language_flag"><img src="/resource/website/images/flag_3.svg" alt="https://www.flaticon.com/authors/freepik"></div>
+            <div class="dropdown_text">japanese</div>
+          </a></li>
+          <li><a href="#">
+            <div class="language_flag"><img src="/resource/website/images/flag_4.svg" alt="https://www.flaticon.com/authors/freepik"></div>
+            <div class="dropdown_text">russian</div>
+          </a></li>
+          <li><a href="#">
+            <div class="language_flag"><img src="/resource/website/images/flag_5.svg" alt="https://www.flaticon.com/authors/freepik"></div>
+            <div class="dropdown_text">spanish</div>
+          </a></li>
+         </ul>
+
+      </div>
+
+      <!-- Currency -->
+      <div class="info_currencies has_children">
+        <div class="dropdown_text">usd</div>
+        <div class="dropdown_arrow"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+
+        <!-- Currencies Dropdown Menu -->
+         <ul>
+          <li><a href="#"><div class="dropdown_text">EUR</div></a></li>
+          <li><a href="#"><div class="dropdown_text">YEN</div></a></li>
+          <li><a href="#"><div class="dropdown_text">GBP</div></a></li>
+          <li><a href="#"><div class="dropdown_text">CAD</div></a></li>
+         </ul>
+
+      </div>
+
+    </div>
+    <div class="menu_search">
+      <form action="#" class="header_search_form menu_mm">
+        <input type="search" class="search_input menu_mm" placeholder="Search" required="required">
+        <button class="header_search_button d-flex flex-column align-items-center justify-content-center menu_mm">
+          <i class="fa fa-search menu_mm" aria-hidden="true"></i>
+        </button>
+      </form>
+    </div>
+    <nav class="menu_nav">
+      <ul class="menu_mm">
+        <li class="menu_mm"><a href="index.html">home</a></li>
+        <li class="menu_mm"><a href="#">woman</a></li>
+        <li class="menu_mm"><a href="#">man</a></li>
+        <li class="menu_mm"><a href="#">lookbook</a></li>
+        <li class="menu_mm"><a href="blog.html">blog</a></li>
+        <li class="menu_mm"><a href="contact.html">contact</a></li>
+      </ul>
+    </nav>
+    <div class="menu_extra">
+      <div class="menu_social">
+        <ul>
+          <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+          <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+          <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+          <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        </ul>
       </div>
     </div>
   </div>
-</div>
-    
-<div class="control-group">
-    <label class="control-label"></label>
-    <div class="controls">
-    <!-- Button to trigger modal -->
-        <a href="#myModal" role="button" class="btn" data-toggle="modal" id="click_alert" style="display:none;"></a>
-       
-        <!-- Modal -->
-        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close closeAlert" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel"></h3>
-            </div>
-            <div class="modal-body" id="myModalBody">
-            </div>
-            <div class="modal-footer">
-                <button class="btn closeAlert" data-dismiss="modal" aria-hidden="true">关闭</button>
-                <button class="btn btn-primary" data-dismiss="modal"  id="changeAlert">确认</button>
-            </div>
-        </div>
-    </div> <!-- /controls --> 
-</div> <!-- /control-group -->
-                                            
-                                         
-
-
-<script type="text/javascript">
-  var alert = $('#alert');
-  var alerttitle = $('#title');
-  var alertcontent = $('#content');
-
-  var myModal = $('#myModal');
-  var myModalLabel = $('#myModalLabel');
-  var myModalBody = $('#myModalBody');
-  var close_alert = $('.closeAlert');
-  var change_alert = $('#changeAlert');
-  var click_alert = $('#click_alert');
   
+  <!-- Sidebar -->
 
-  function alert_close(){
-      alerttitle.html('');
-      alertcontent.html('');
-      alert.removeClass('alert-success');
-      alert.removeClass('alert-danger');
-      alert.css('display','none');
-  }
-</script>
+  <div class="sidebar">
+    
+    <!-- Info -->
+    <div class="info">
+      <div class="info_content d-flex flex-row align-items-center justify-content-start">
+        
+        <!-- Language -->
+        <div class="info_languages has_children">
+          <div class="language_flag"><img src="/resource/website/images/flag_1.svg" alt="https://www.flaticon.com/authors/freepik"></div>
+          <div class="dropdown_text">english</div>
+          <div class="dropdown_arrow"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+          
+          <!-- Language Dropdown Menu -->
+           <ul>
+            <li><a href="#">
+              <div class="language_flag"><img src="/resource/website/images/flag_2.svg" alt="https://www.flaticon.com/authors/freepik"></div>
+              <div class="dropdown_text">french</div>
+            </a></li>
+            <li><a href="#">
+              <div class="language_flag"><img src="/resource/website/images/flag_3.svg" alt="https://www.flaticon.com/authors/freepik"></div>
+              <div class="dropdown_text">japanese</div>
+            </a></li>
+            <li><a href="#">
+              <div class="language_flag"><img src="/resource/website/images/flag_4.svg" alt="https://www.flaticon.com/authors/freepik"></div>
+              <div class="dropdown_text">russian</div>
+            </a></li>
+            <li><a href="#">
+              <div class="language_flag"><img src="/resource/website/images/flag_5.svg" alt="https://www.flaticon.com/authors/freepik"></div>
+              <div class="dropdown_text">spanish</div>
+            </a></li>
+           </ul>
+
+        </div>
+
+        <!-- Currency -->
+        <div class="info_currencies has_children">
+          <div class="dropdown_text">usd</div>
+          <div class="dropdown_arrow"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+
+          <!-- Currencies Dropdown Menu -->
+           <ul>
+            <li><a href="#"><div class="dropdown_text">EUR</div></a></li>
+            <li><a href="#"><div class="dropdown_text">YEN</div></a></li>
+            <li><a href="#"><div class="dropdown_text">GBP</div></a></li>
+            <li><a href="#"><div class="dropdown_text">CAD</div></a></li>
+           </ul>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Logo -->
+    <div class="sidebar_logo">
+        <a href="#"><div><span>C</span>hain</div></a>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar_nav">
+      <ul>
+        <li><a href="index.html">home<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+        <li><a href="#">woman<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+        <li><a href="#">man<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+        <li><a href="#">lookbook<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+        <li><a href="blog.html">blog<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+        <li><a href="#">contact<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+      </ul>
+    </nav>
+
+    <!-- Search -->
+    <div class="search">
+      <form action="#" class="search_form" id="sidebar_search_form">
+        <input type="text" class="search_input" placeholder="Search" required="required">
+        <button class="search_button"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </form>
+    </div>
+
+    <!-- Cart -->
+    <div class="cart d-flex flex-row align-items-center justify-content-start">
+      <div class="cart_icon"><a href="cart.html">
+        <img src="/resource/website/images/bag.png" alt="">
+        <div class="cart_num">2</div>
+      </a></div>
+      <div class="cart_text">bag</div>
+      <div class="cart_price">$39.99 (1)</div>
+    </div>
+  </div>
